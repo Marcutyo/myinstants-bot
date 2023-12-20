@@ -1,7 +1,7 @@
 import requests
 
 from constants import BASE_URL
-from exc import InstantNotFoundError
+from exc import InstantNotFoundError, InvalidPageError
 from models import InstantResult, InstantDetail
 
 API_BASE_URL = f'{BASE_URL}/api/v1'
@@ -29,8 +29,8 @@ def get_instants(query: str = None, page: int = 1) -> InstantResult:
     global FORMAT
 
     if query and not isinstance(query, str):
-        raise ValueError("Query must be a a string.")
-    if not isinstance(page, int) and page < 1:
+        raise ValueError("Query must be a string.")
+    if not isinstance(page, int) or page < 1:
         raise ValueError("Page number must be an int greater than 0.")
 
     params = {
@@ -40,6 +40,8 @@ def get_instants(query: str = None, page: int = 1) -> InstantResult:
     }
     response = requests.get(INSTANTS_URL, params)
     json = response.json()
+    if response.status_code == 404:
+        raise InvalidPageError(page)
     return InstantResult(**json)
 
 
