@@ -1,7 +1,7 @@
 import requests
 
 from constants import BASE_URL
-from exc import InstantNotFoundError, InvalidInstantNameError
+from exc import InstantNotFoundError
 from models import InstantResult, InstantDetail
 
 API_BASE_URL = f'{BASE_URL}/api/v1'
@@ -22,9 +22,16 @@ def get_instants(query: str = None, page: int = 1) -> InstantResult:
     :param query: The query to get all instants for
     :param page: The page number to retrieve the details
     :return InstantResult: The retrieved instants
+    :raises ValueError: If page number is less than 1 or is not an int;
+    if query, when provided, is not a string
     """
     global INSTANTS_URL
     global FORMAT
+
+    if query and not isinstance(query, str):
+        raise ValueError("Query must be a a string.")
+    if not isinstance(page, int) and page < 1:
+        raise ValueError("Page number must be an int greater than 0.")
 
     params = {
         "name": query,
@@ -42,14 +49,14 @@ def get_instant(name: str) -> InstantDetail:
 
     :param name: The name of the instant to retrieve the details for.
     :return:
-    :raises ValueError: If the instant name is not provided
+    :raises ValueError: If the instant name is not a non-empty string
     :raises InstantNotFoundError: If an instant with the given name is not found.
     """
     global INSTANTS_URL
     global FORMAT
 
-    if not name:
-        raise InvalidInstantNameError()
+    if not isinstance(name, str) or not name:
+        raise ValueError("Name must be a non-empty string.")
 
     instant_url = f'{INSTANTS_URL}/{name}'
     params = {
