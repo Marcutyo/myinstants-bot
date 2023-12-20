@@ -1,5 +1,5 @@
 from pydantic import BaseModel, HttpUrl, field_validator
-from pydantic.color import Color
+from pydantic_extra_types.color import Color
 
 
 class InstantDetail(BaseModel):
