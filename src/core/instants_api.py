@@ -1,8 +1,8 @@
 import requests
 
-from constants import BASE_URL
-from exc import InstantNotFoundError, InvalidPageError
-from models import InstantResult, InstantDetail
+from core.constants import BASE_URL
+from core.exc import InstantNotFoundError, InvalidPageError
+from core.models import InstantResult, InstantDetail
 
 API_BASE_URL = f'{BASE_URL}/api/v1'
 INSTANTS_URL = f'{API_BASE_URL}/instants'

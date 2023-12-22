@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from models import InstantDetail
+from core.models import InstantDetail
 
 
 def test_instant_detail_tags_validator():

@@ -1,8 +1,8 @@
 import pytest
 
-from exc import InstantNotFoundError, InvalidPageError
-from instants_api import get_instants, get_instant
-from models import InstantResult, InstantDetail
+from core.exc import InstantNotFoundError, InvalidPageError
+from core.instants_api import get_instants, get_instant
+from core.models import InstantResult, InstantDetail
 
 
 def test_get_instants() -> None:
